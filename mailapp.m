@@ -39,7 +39,7 @@ int main (int argc, const char **argv) {
 		}@catch (NSException *e) {
 			NSLog(@"Exception:%@");
 		}
-	} else if ( listArg ) {
+	} else if ( listArg != nil && [listArg length] > 0 ) {
 		// Search and print:
 		
 		QueryFactory * theFactory = [[QueryFactory alloc] init];

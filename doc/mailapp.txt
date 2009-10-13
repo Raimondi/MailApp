@@ -1,54 +1,75 @@
-*MailApp.txt*     Send emails through Mail.app from Vim.
+*MailApp*     Send emails through Mail.app from Vim. v1.0 Pre-release
 
 
                           MAILAPP REFERENCE MANUAL *
 
 
 ==============================================================================
- 0.- CONTENTS                                               *MailApp-contents*
+ 0.- CONTENTS                                                *MailAppContents*
 
-    1. Introduction____________________________|MailApp|
+    1. Introduction____________________________|MailAppIntro|
     2. Usage___________________________________|MailAppUsage|
-        2.1 E-mail example_____________________|MailAppEMailExample|
+        2.1 Installation_______________________|MailAppInstall|
+        2.2 Message format_____________________|MailAppFormat|
+        2.3 E-mail example_____________________|MailAppEMailExample|
     3. Functionality___________________________|MailAppFunctionality|
         3.1 Syntax highlighting________________|MailAppHighlighting|
         3.2 Header name completion_____________|MailAppHeaderCompletion|
         3.3 E-mail address completion__________|MailAppEmailCompletion|
         3.4 Attachment path completion_________|MailAppAttachmentCompletion|
-        3.5 Command line executable____________|MailAppCommandLine|
     4. Customization___________________________|MailAppOptions|
-        3.1 Options summary____________________|MailAppOptionSummary|
-        3.2 Options details____________________|MailAppOptionDetails|
-    5. Public commands and mappings____________|MailAppPubCmdsAndMaps|
+        4.1 Options summary____________________|MailAppOptionsSummary|
+        4.2 Options details____________________|MailAppOptionsDetail|
+    5. Comands and alikes______________________|MailAppCommands|
     6. TODO list_______________________________|MailAppTodo|
     7. Maintainer______________________________|MailAppMaintainer|
-    8. Credits_________________________________|MailAppCredits|
-    9. History_________________________________|MailAppHistory|
+    8. History_________________________________|MailAppHistory|
 
 ==============================================================================
- 1.- INTRODUCTION                                                    *MailApp*
+ 1.- INTRODUCTION                                               *MailAppIntro*
 
-This is a plugin with a single purpose: to allow Mac OS X users to send
-e-mails from Vim using the Mail.app application. In order to do so, it
-requires the command line tool |mailapp| to be installed.
+This plugin allows Mac OS X users to send e-mails from Vim using the Mail.app
+application.
 
 It provides syntax highlighting, auto-completion for header name, e-mail and
-attachment path mapped to <Tab>.
-
-Read |MailAppHighlighting|, |MailAppHeaderCompletion|,
-|MailAppEmailCompletion| and |MailAppAttachmentCompletion| for detailed
-information.
+attachment.
 
 ==============================================================================
  2.- USAGE                                                      *MailAppUsage*
 
 To start a new e-mail, use the command |:MailAppNew|, which will open a
-new buffer whwere you can start writing. To send the e-mail, use the command
-|:MailAppSend| or the mapping |<leader>send|.
+new buffer where you can start writing. To send the e-mail, use the command
+|:MailAppSend|.
 
-The e-mail is divided in two main parts, the headers and the body. The header
-region starts in the first line of the e-mail and ends with the first empty
-line, the body starts right after that.
+------------------------------------------------------------------------------
+   2.1 INSTALLATION                                           *MailAppInstall*
+
+Mac OS X 10.5 or later is required for this plugin. To install it, unzip the
+MailApp.zip file and place every file in the respective folder inside your
+"~/.vim" folder, keeping the same folder structure, except for MailApp.bundle
+that should go inside your "Documents" folder.
+>
+ ~/
+   |-.vim/
+   |    |-doc/mailapp.txt
+   |    |-ftplugin/mailapp.vim
+   |    |-plugin/MailApp.vim
+   |    |-syntax/mailapp.vim
+   |-/Documents/MailApp.bundle
+<
+If you place MailApp.bunlde somewhere else, you need to set the
+|'MailApp_bundle'| option in your |vimrc| so MailApp.vim can find it.
+
+After you placed the files in their place, run ":helptags ~/.vim/doc" to
+update the help files tags.
+
+------------------------------------------------------------------------------
+   2.2 MESSAGE FORMAT                                          *MailAppFormat*
+
+The e-mail is divided in two main parts, the pseudo-headers ("headers" and
+"header" from now on) and the body. The headers region starts in the first
+line of the e-mail and ends with the first empty line, the body starts right
+after that.
 
 The headers that can be used are the following:
 
@@ -63,8 +84,9 @@ Every header has the following format: at least one letter begins the line and
 identifies the header, followed by a ":", optional spaces or tabs may follow
 and will be ignored. The first character that is not a space or tab starts the
 header's content.
-e.g.: >
-  fr: Israel Chauca F. <israelchauca@gmail.com>
+e.g., all of the following are valid headers:
+>
+  fR: Israel Chauca F. <israelchauca@gmail.com>
   T:  some@example.com
   subj: Hello!
   aTTachment: trip/some picture.jpg
@@ -73,7 +95,8 @@ e.g.: >
 If you include the name with the e-mail, you must enclose the e-mail within
 "<>". Multiple e-mails must be separated by a ";", or you can use multiple
 headers of the same kind.
-e.g.: >
+e.g.:
+>
   from: Israel Chauca F. <israelchauca@gmail.com>
   to: First Friend <friend1@example.com>; Second Friend <friend2@example.net>
   cc: Third Friend <friend3@example.org>; friend5@example.net
@@ -82,8 +105,7 @@ e.g.: >
 Attachment paths have to be given one per header. They will be checked using
 the following rules:
 
- 1. If the path starts with "/" and a readable file doesn't exists on that
-    path, the message is not sent and the user is notified.
+ 1. If the path starts with "/", check if a readable file exists there.
  2. If the path starts with "~/", the leading "~/" is replace by the absolute
     path to the user's home folder ($HOME) and the new path is checked again
     as in rule 1.
@@ -92,7 +114,7 @@ the following rules:
     again as in rule 1.
 
 ------------------------------------------------------------------------------
-   2.1 E-MAIL EXAMPLE                                    *MailAppEMailExample*
+   2.3 E-MAIL EXAMPLE                                    *MailAppEMailExample*
 
 from: Israel Chauca F. <israelchauca@gmail.com>
 to: First Friend <friend1@example.com>; Second Friend <friend2@example.net>
@@ -121,25 +143,25 @@ Curabitur condimentum ornare quam, non semper ipsum consequat non. Donec
 sagittis tristique iaculis.
 
 ==============================================================================
- 2. FUNCTIONALITY PROVIDED                              *MailAppFunctionality*
+ 3. FUNCTIONALITY                                       *MailAppFunctionality*
 
 ------------------------------------------------------------------------------
-   2.1 SYNTAX HIGHLIGHTING                               *MailAppHighlighting*
+   3.1 SYNTAX HIGHLIGHTING                               *MailAppHighlighting*
 
-MailApp provides syntax highlighting for the diferent parts of the email
-headers: header name, valid email address, subject text and attachments paths.
+MailApp provides syntax highlighting for the diferent parts of the headers:
+header name, email address, subject text and attachment paths.
 
 ------------------------------------------------------------------------------
-   2.2 HEADER NAME COMPLETION                        *MailAppHeaderCompletion*
+   3.2 HEADER NAME COMPLETION                        *MailAppHeaderCompletion*
 
 Headers follow the following format: at least one letter followed by a ":",
 optional spaces or tabs and, after that, the header's content.
 
 To make things easier, MailApp provides two auto-completion systems mapped to
-<Tab>. In order to use the fisrt of them, type the first letter of a header
-and then hit <Tab>, the header name will be completed if you are inside the
-headers area. For the second system, you hit <Tab> in an empty line inside the
-header area and it will be expanded using the following rules:
+<Tab>. The first one completes the header name using the first character or
+characters typed, the header name will be completed if you are inside the
+headers area. The second is a sequencial system, you hit <Tab> in an empty
+line inside the header area and it will be expanded using the following rules:
 
  1. If you are in the first line and |MailApp_from| doesn't exists, "from: "
     is inserted.
@@ -149,11 +171,11 @@ header area and it will be expanded using the following rules:
  5. If none of the previous rules apply, a <Tab> is inserted.
 
 ------------------------------------------------------------------------------
-   2.3 E-MAIL ADDRESS COMPLETION                      *MailAppEmailCompletion*
+   3.3 E-MAIL ADDRESS COMPLETION                      *MailAppEmailCompletion*
 
 When inside a header that takes e-mails as content, hitting <Tab> after typing
 some characters, MacMail will search in the Address Book for matching names
-and e-mails and display a menu list to choose one.
+and e-mails and display a menu list from which you can choose.
 
 For the "from" header, Mail.app only accepts e-mail addresses that are set in
 its e-mail accounts; if the e-mail provided doesn't match any of them or none
@@ -162,28 +184,16 @@ header pulls every "from" e-mail from every account and displays a menu with
 the options.
 
 ------------------------------------------------------------------------------
-   2.4 ATTACHMENT PATH COMPLETION                *MailAppAttachmentCompletion*
+   3.4 ATTACHMENT PATH COMPLETION                *MailAppAttachmentCompletion*
 
 When writing the path in an attachment header, hitting <Tab> will call file
 auto-completion, see |compl-filename|.
 
-------------------------------------------------------------------------------
-   2.5 COMMAND LINE EXECUTABLE                            *MailAppCommandLine*
-                                                                     *mailapp*
-
-MailApp relies on a command line utility, "mailapp", which does all the dirty
-work of comunicating with Mail.app and can be downloaded from the following
-web site:
-
-   http://cachivaches.chauca.net/mailapp/
-
-Make sure to install it somewhere in your $PATH.
-
 ==============================================================================
- 3. CUSTOMIZATION                                         *MailAppOptions*
+ 4. CUSTOMIZATION                                         *MailAppOptions*
 
 ------------------------------------------------------------------------------
-   3.1 OPTIONS SUMMARY                                  *MailAppOptionSummary*
+   4.1 OPTIONS SUMMARY                                 *MailAppOptionsSummary*
 
 The behaviour of this script can be customized setting the following options
 in your vimrc file. You can use local options to set the configuration for
@@ -200,8 +210,10 @@ specific file types, see |MailAppOptionDetails| for examples.
 |'MailApp_visible'|         Tells MailApp if the message should be visible or
                             not
 
+|'MailApp_bundle'|          Tells MailApp where to look for the MailApp.bundle
+                            file.
 ------------------------------------------------------------------------------
-   3.2 OPTIONS DETAILS                                  *MailAppOptionDetails*
+   4.2 OPTIONS DETAIL                                   *MailAppOptionsDetail*
 
 Add the shown lines to your vimrc files in order to set the below options.
 
@@ -242,9 +254,20 @@ option along with |MailApp_send|.
 e.g.: >
         let MailApp_visible = 1
 <
+------------------------------------------------------------------------------
+                                                            *'MailApp_bundle'*
+Values: path to the MailApp.bundle                                           ~
+Default: '~/Documents/MailApp.bundle'                                        ~
+
+This option lets MailApp.vim find the MailApp.bundle file. Use this if the
+bundle is not placed in your "Documents" folder.
+
+e.g.: >
+        let MailApp_bundle = '~/Some/other/folder/MailApp.bundle'
+<
 
 ==============================================================================
- 4. PUBLIC COMMANDS AND MAPPINGS                       *MailAppPubCmdsAndMaps*
+ 5. COMMANDS AND ALIKES                                      *MailAppCommands*
 
 ------------------------------------------------------------------------------
 :MailAppNew                                                      *:MailAppNew*
@@ -257,26 +280,40 @@ This command opens a new buffer and sets its file type to "mailapp".
 Sends the message.
 
 ------------------------------------------------------------------------------
-<Leader>send                                               *MailApp_imap_send*
-                                                                *<leader>send*
-Sends the message.
+MailAppNew()                                                    *MailAppNew()*
+
+Creates a new message. You can map some keyword to call this function.
+e.g.: >
+        map <leader>new call MailAppNew()
+<
+------------------------------------------------------------------------------
+MailAppSend()                                                  *MailAppSend()*
+
+Sends the message. You can map some keyword to call this function.
+e.g.: >
+        map <leader>send call MailAppSend()
+<
 
 ==============================================================================
- 5. TODO LIST                                                    *MailAppTodo*
+ 6. TODO LIST                                                    *MailAppTodo*
 
-- Message navigation and retrieval.
+- Mailbox navigation and message retrieval.
+  If you know a way to get an e-mail's body from Mail.app without losing the
+  quoting levels (which the "Edit in MacVim" gets right, but I just don't know
+  how), let me know and I'll try to implement this.
 
 ==============================================================================
- 6. MAINTAINER                                             *MailAppMaintainer*
+ 7. MAINTAINER                                             *MailAppMaintainer*
 
 Hi there! My name is Israel Chauca F. and I can be reached at:
+
     mailto:israelchauca@gmail.com
 
 Feel free to send me any suggestions and/or comments about this plugin, I'll
 be very pleased to read them.
 
 ==============================================================================
- 7. HISTORY                                                   *MailAppHistory*
+ 8. HISTORY                                                   *MailAppHistory*
 
   Version      Date      Release notes                                       ~
 |---------|------------|-----------------------------------------------------|

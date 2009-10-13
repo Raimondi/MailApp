@@ -12,8 +12,8 @@
 		580AB3CC104ED2030060ED44 /* MLConstantGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 580AB3C4104ED2030060ED44 /* MLConstantGlue.m */; };
 		580AB3CD104ED2030060ED44 /* MLReferenceGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 580AB3C7104ED2030060ED44 /* MLReferenceGlue.m */; };
 		580AB3CE104ED2030060ED44 /* MLReferenceRendererGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 580AB3C9104ED2030060ED44 /* MLReferenceRendererGlue.m */; };
-		580AB3D7104ED38C0060ED44 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580AB3D6104ED38C0060ED44 /* Appscript.framework */; };
-		582791C2104AE54B0023D718 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582791C1104AE54B0023D718 /* AddressBook.framework */; };
+		5840C1F11079492D0019BB28 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5840C1F01079492D0019BB28 /* AddressBook.framework */; };
+		58CF8D58107BA83300FC4E2E /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58CF8D57107BA83300FC4E2E /* Appscript.framework */; };
 		8DD76F9A0486AA7600D96B5E /* mailapp.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* mailapp.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* mailapp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* mailapp.1 */; };
@@ -48,9 +48,9 @@
 		580AB3C7104ED2030060ED44 /* MLReferenceGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLReferenceGlue.m; sourceTree = "<group>"; };
 		580AB3C8104ED2030060ED44 /* MLReferenceRendererGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLReferenceRendererGlue.h; sourceTree = "<group>"; };
 		580AB3C9104ED2030060ED44 /* MLReferenceRendererGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLReferenceRendererGlue.m; sourceTree = "<group>"; };
-		580AB3D6104ED38C0060ED44 /* Appscript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appscript.framework; path = /Library/Frameworks/Appscript.framework; sourceTree = "<absolute>"; };
-		582791C1104AE54B0023D718 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		58279201104AF79A0023D718 /* mailapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mailapp.h; sourceTree = "<group>"; };
+		5840C1F01079492D0019BB28 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
+		58CF8D57107BA83300FC4E2E /* Appscript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appscript.framework; path = /Library/Frameworks/Appscript.framework; sourceTree = "<absolute>"; };
 		8DD76FA10486AA7600D96B5E /* mailapp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mailapp; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* mailapp.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = mailapp.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,8 +61,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
-				582791C2104AE54B0023D718 /* AddressBook.framework in Frameworks */,
-				580AB3D7104ED38C0060ED44 /* Appscript.framework in Frameworks */,
+				5840C1F11079492D0019BB28 /* AddressBook.framework in Frameworks */,
+				58CF8D58107BA83300FC4E2E /* Appscript.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,8 +94,8 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				580AB3D6104ED38C0060ED44 /* Appscript.framework */,
-				582791C1104AE54B0023D718 /* AddressBook.framework */,
+				58CF8D57107BA83300FC4E2E /* Appscript.framework */,
+				5840C1F01079492D0019BB28 /* AddressBook.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);
 			name = "External Frameworks and Libraries";
